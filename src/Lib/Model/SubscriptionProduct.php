@@ -15,6 +15,9 @@ class SubscriptionProduct extends BaseProduct
      * @param string $currency
      * @param int $subscriptionLength
      * @param string $subscriptionPeriod Allowed types - 24H, 7D, 30D, 365D
+     * @param float|null $subscriptionTrialPrice
+     * @param float|null $subscriptionTrialStart
+     * @param float|null $subscriptionTrialEnd
      * @param int|null $subscriptionBillingCycles
      * @param float|null $subscriptionEndDate
      * @param float|null $discount
@@ -29,6 +32,9 @@ class SubscriptionProduct extends BaseProduct
         string $currency,
         int $subscriptionLength,
         string $subscriptionPeriod,
+        float $subscriptionTrialPrice = null,
+        float $subscriptionTrialStart = null,
+        float $subscriptionTrialEnd = null,
         int $subscriptionBillingCycles = null,
         float $subscriptionEndDate = null,
         float $discount = null,
@@ -47,7 +53,13 @@ class SubscriptionProduct extends BaseProduct
             $subscriptionLength,
             $subscriptionPeriod,
             $subscriptionBillingCycles,
-            $subscriptionEndDate
+            $subscriptionEndDate,
+            null,
+            null,
+            null,           
+            $subscriptionTrialPrice,
+            $subscriptionTrialStart,
+            $subscriptionTrialEnd    
         );
     }
 }

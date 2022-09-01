@@ -73,6 +73,13 @@ class BaseProduct implements ProductInterface
     /** @var string|null */
     private $postTrialPeriod;
 
+    /** @var int|float|null */
+    private $subscriptionTrialPrice;
+    /** @var string|null */
+    private $subscriptionTrialStart;
+    /** @var string|null */
+    private $subscriptionTrialEnd;
+
     /**
      * @param string $type
      * @param string $productId
@@ -89,6 +96,9 @@ class BaseProduct implements ProductInterface
      * @param string|null $postTrialProductId
      * @param int|null $postTrialLength
      * @param string|null $postTrialPeriod
+     * @param float|null $subscriptionTrialPrice
+     * @param float|null $subscriptionTrialStart
+     * @param float|null $subscriptionTrialEnd
      * @throws GeneralMaxpayException
      */
     public function __construct(
@@ -106,7 +116,10 @@ class BaseProduct implements ProductInterface
         float $subscriptionEndDate = null,
         string $postTrialProductId = null,
         int $postTrialLength = null,
-        string $postTrialPeriod = null
+        string $postTrialPeriod = null,
+        float $subscriptionTrialPrice = null,
+        float $subscriptionTrialStart = null,
+        float $subscriptionTrialEnd = null
     ) {
         $validator = new Validator();
         $type = $validator->validateString('productType', $type);
@@ -157,6 +170,13 @@ class BaseProduct implements ProductInterface
             $this->subscriptionEndDate = is_null($subscriptionEndDate) ?
                 null :
                 $validator->validateNumeric('subscriptionEndDate', $subscriptionEndDate);
+            $this->subscriptionTrialPrice = $validator->validateNumeric('subscriptionTrialPrice', $subscriptionTrialPrice);
+            $this->subscriptionTrialStart = is_null($subscriptionTrialStart) ?
+                null :
+                $validator->validateNumeric('subscriptionTrialStart', $subscriptionTrialStart);
+            $this->subscriptionTrialEnd = is_null($subscriptionTrialEnd) ?
+                null :
+                $validator->validateNumeric('subscriptionTrialEnd', $subscriptionTrialEnd);
         }
 
         if (!is_null($postTrialProductId) && $this->type === self::TYPE_TRIAL) {
@@ -204,6 +224,15 @@ class BaseProduct implements ProductInterface
         }
         if (!is_null($this->subscriptionEndDate)) {
             $result['subscriptionEndDate'] = $this->subscriptionEndDate;
+        }
+        if (!is_null($this->subscriptionTrialPrice)) {
+            $result['subscriptionTrialPrice'] = $this->subscriptionTrialPrice;
+        }
+        if (!is_null($this->subscriptionTrialStart)) {
+            $result['subscriptionTrialStart'] = $this->subscriptionTrialStart;
+        }
+        if (!is_null($this->subscriptionTrialEnd)) {
+            $result['subscriptionTrialEnd'] = $this->subscriptionTrialEnd;
         }
 
         //Post trial section

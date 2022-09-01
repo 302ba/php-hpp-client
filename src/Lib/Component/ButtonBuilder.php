@@ -53,6 +53,10 @@ class ButtonBuilder extends BaseBuilder
     /** @var string|null */
     private $backUrl;
 
+    /** @var string */
+    private $locale = 'en-US';
+    private $locales = ["en-US", "ru-RU", "de-DE", "fr-FR", "pt-PT", "it-IT", "es-ES", "tr-TR", "sv-SE", "no-NO", "da-DA", "fl-FL", "nl-NL", "en-GA", "pl-PL", "lt-LT"];
+
     /**
      * @param IdentityInterface $identity
      * @param string $userId
@@ -157,6 +161,20 @@ class ButtonBuilder extends BaseBuilder
     {
         $this->showButton = $value;
         $this->logger->info('Field `showButton` successfully set');
+
+        return $this;
+    }
+
+    /**
+     * Set locale of payment form
+     *
+     * @param string $value
+     * @return ButtonBuilder
+     */
+    public function setLocale(string $value): ButtonBuilder
+    {
+        $this->locale = $value;
+        $this->logger->info('Field `locale` successfully set');
 
         return $this;
     }
@@ -280,6 +298,7 @@ class ButtonBuilder extends BaseBuilder
         if (count($customProduct) > 0) {
             $button->pushValue('customproduct', json_encode($customProduct));
         }
+        $button->pushValue('locale', $this->locale);
 
         return $button;
     }
